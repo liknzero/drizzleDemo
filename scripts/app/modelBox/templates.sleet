@@ -1,0 +1,11 @@
+#!handlebars
+module
+    div.module-box
+        div(data-region=modelBox)
+    
+view('modelBox')
+    div.model-box
+        h2 确定删除吗？
+        div.model-btn
+            button#cancel-btn 取消
+            button#confirm-btn 删除

@@ -1,0 +1,37 @@
+#!handlebars
+module
+    div.todotest
+        div(data-region='main')
+        div(data-region='footer')
+
+view('main')
+    div.test-main
+        h2.test-title 统计表
+        .test-add
+            button#add-button 新增
+            button#delete-select-button 批量删除
+        table
+            thead 
+                tr   
+                    th
+                        input#selectAll(type='checkbox')
+                        echo('全选')
+                    th 姓名
+                    th 年龄
+                    th 学科
+                    th(style='width: 200px;') 操作
+            each(dataTestData)
+                tr
+                    td
+                        input.select-box(id='select-one-' + id type='checkbox' value=id name='selectOne')(checked)
+                    td > echo(name)
+                    td > echo(age)
+                    td > echo(class)
+                    td
+                        button(id='edit-one-' + id data-value=id)
+                            echo('编辑')
+                        button(id='delete-one-' + id data-value=id)
+                            echo('删除')
+view('footer')
+    div#modelBox(data-dynamic-key='123123')
+                            

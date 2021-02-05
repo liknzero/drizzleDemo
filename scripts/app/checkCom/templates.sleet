@@ -1,0 +1,17 @@
+#!handlebars
+module
+    div.module-box
+        div(data-region='main')
+    
+view('main')
+    h2(style='text-align: center') 组件引入切换
+    .test-add
+        button#com-button-1(data-type='1') 声明组件
+        button#com-button-2(data-type='2') 三方组件
+    .check-dom(style='text-align: center')
+        div#video-box(name='video')
+            div#modelBox(data-dynamic-key='123123')
+        div#qrcode-box.hidden(name='qrcode')
+            h1(class="brand-title") 二维码
+            div(id="qr-box" class="qrcode")
+    

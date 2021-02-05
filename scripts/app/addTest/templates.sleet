@@ -1,0 +1,34 @@
+#!handlebars
+module
+    div.module-box
+        div(data-region='mains')
+    
+view('mains')
+    div(class='model-info' + if(isShowModel 'hidden'))
+        div.model-info-box
+            h2(style='text-align: center') 表单
+            div.module-form-box.basic-grey
+                form#add-form-box
+                    label.form-item
+                        span 姓名
+                        input#form-name(type='text' id='name' name='name' placeholder='请输入姓名' value=chooseName)
+                    label.form-item
+                        span 年龄
+                        input#form-age(maxLentth=3 type='number' id='age' name='age' placeholder='请输入姓名' value=chooseAge)
+                    label.form-item
+                        span 学科
+                        label
+                            input(type='radio' name='formClass'  value="语文" label='语文')(checked)&if(chooseClass1)
+                            echo('语文')
+                        label
+                            input(type='radio' name='formClass'  value="数学" label='数学')(checked)&if(chooseClass2)
+                            echo('数学')
+                        label
+                            input(type='radio' name='formClass'  value="物理" label='物理')(checked)&if(chooseClass3)
+                            echo('物理')
+                        label
+                            input(type='radio' name='formClass'  value="化学" label='化学')(checked)&if(chooseClass4)
+                            echo('化学')
+            .test-add
+                button#back-button 取消
+                button#submit-button 提交表单
