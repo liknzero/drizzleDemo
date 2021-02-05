@@ -48,9 +48,13 @@ exports.handlers = {
     backBtn: function() {
         var chooseInfo = this.bindings.chooseInfo
         var isShow = this.bindings.isShow
-        isShow.data.isShowModel = 0
-        chooseInfo.data = {}
+        var renderOptions = this.module.renderOptions
+        renderOptions.callbackClear()
+        isShow.clear()
+        chooseInfo.clear()
         isShow.changed()
+        chooseInfo.changed()
+        isShow.data.isShowModel = 0
     },
     onSubmit: function() {
         var tagElements = this.$$('form')[0].getElementsByTagName('input');   

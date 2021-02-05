@@ -122,9 +122,13 @@ exports.handlers = {
     backBtn: function() {
         var chooseInfo = this.bindings.chooseInfo
         var isShow = this.bindings.isShow
-        isShow.data.isShowModel = 0
-        chooseInfo.data = {}
+        var renderOptions = this.module.renderOptions
+        renderOptions.callbackClear()
+        isShow.clear()
+        chooseInfo.clear()
         isShow.changed()
+        chooseInfo.changed()
+        isShow.data.isShowModel = 0
     },
     onSubmit: function() {
         var tagElements = this.$$('form')[0].getElementsByTagName('input');   
@@ -863,6 +867,12 @@ exports.store = {
 			}
 			testData.changed()
 			console.log(payload,11111)
+		},
+		clearChoose: function() {
+			console.log(333333333333)
+			var chooseSelect = this.models.chooseSelect
+			chooseSelect.data = {}
+			// chooseSelect.changed()
 		}
 	}
 }
@@ -875,6 +885,7 @@ exports.beforeRender = function() {
 	// this.dispatch('init')
 }
 exports.afterRender = function() {
+	// 在所有请求和子组件渲染完毕以后执行此生命周期
 	console.log('afterRender')
 }
 
@@ -977,26 +988,25 @@ exports.dataForActions = {
 exports.type = 'dynamic';
 // 这个data获取的是getEntity返回的值，会作为renderOptions传入给要渲染的Module
 exports.dataForEntityModule = function(data) {
-    console.log('entity', 1111111111)
     return data;
 };
 
 exports.getEntity = function() {
-    console.log('entity', 2222222222)
-
-    var _ = this;
+    var _this = this;
     return {
         isShow: this.bindings.isShow.data.isShowAdd,
         formInfo: this.bindings.chooseSelect.data,
         callbacks: function(data) {
-            _.module.dispatch('changeList',data)
-        } 
+            _this.module.dispatch('changeList',data)
+        },
+        callbackClear: function(data) {
+            console.log(22222222222)
+            _this.module.dispatch('clearChoose', data)
+        }
     };
 };
 
 exports.getEntityModuleName = function() {
-    console.log('entity', 33333333333)
-
     return 'addTest';
 };
 },{"lodash":7}],"./app/test/view-main":[function(require,module,exports){
@@ -1038,11 +1048,15 @@ exports.handlers = {
     editSelect: function(id, e) {
         var data = this.bindings.testData
         var chooseSelect = this.bindings.chooseSelect
+        var isShow = this.bindings.isShow
+    
         var info = data.data.find((item) => {
             if (item.id == id) return item
         })
         chooseSelect.data = info
-        chooseSelect.changed()
+        isShow.data.isShowAdd = 1
+        isShow.changed()
+        // chooseSelect.changed()
     },
     deleteSelect: function(id, e) {
         var data = this.bindings.testData.data

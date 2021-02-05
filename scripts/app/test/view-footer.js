@@ -24,25 +24,24 @@ exports.dataForActions = {
 exports.type = 'dynamic';
 // 这个data获取的是getEntity返回的值，会作为renderOptions传入给要渲染的Module
 exports.dataForEntityModule = function(data) {
-    console.log('entity', 1111111111)
     return data;
 };
 
 exports.getEntity = function() {
-    console.log('entity', 2222222222)
-
-    var _ = this;
+    var _this = this;
     return {
         isShow: this.bindings.isShow.data.isShowAdd,
         formInfo: this.bindings.chooseSelect.data,
         callbacks: function(data) {
-            _.module.dispatch('changeList',data)
-        } 
+            _this.module.dispatch('changeList',data)
+        },
+        callbackClear: function(data) {
+            console.log(22222222222)
+            _this.module.dispatch('clearChoose', data)
+        }
     };
 };
 
 exports.getEntityModuleName = function() {
-    console.log('entity', 33333333333)
-
     return 'addTest';
 };

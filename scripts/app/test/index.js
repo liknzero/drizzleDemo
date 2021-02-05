@@ -31,6 +31,12 @@ exports.store = {
 			}
 			testData.changed()
 			console.log(payload,11111)
+		},
+		clearChoose: function() {
+			console.log(333333333333)
+			var chooseSelect = this.models.chooseSelect
+			chooseSelect.data = {}
+			// chooseSelect.changed()
 		}
 	}
 }

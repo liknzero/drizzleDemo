@@ -36,11 +36,15 @@ exports.handlers = {
     editSelect: function(id, e) {
         var data = this.bindings.testData
         var chooseSelect = this.bindings.chooseSelect
+        var isShow = this.bindings.isShow
+    
         var info = data.data.find((item) => {
             if (item.id == id) return item
         })
         chooseSelect.data = info
-        chooseSelect.changed()
+        isShow.data.isShowAdd = 1
+        isShow.changed()
+        // chooseSelect.changed()
     },
     deleteSelect: function(id, e) {
         var data = this.bindings.testData.data
