@@ -1,11 +1,11 @@
 #!handlebars
 module
-    div.todotest
+    .todotest
         div(data-region='main')
         div(data-region='footer')
 
 view('main')
-    div.test-main
+    .test-main
         h2.test-title 统计表
         .test-add
             button#add-button 新增
@@ -33,5 +33,5 @@ view('main')
                         button(id='delete-one-' + id data-value=id)
                             echo('删除')
 view('footer')
-    div#modelBox(data-dynamic-key='123123')
+    #modelBox(data-dynamic-key='123123')
                             

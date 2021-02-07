@@ -19,36 +19,23 @@ exports.events = {
 }
 exports.handlers = {
     addSecectInfo: function (e, obj) {
-        console.log(e)
-        console.log(obj)
-        // this.app.navigate('addTest', true)
-        console.log(this.bindings.testData.data)
         var isShow = this.bindings.isShow
         isShow.data.isShowAdd = 1
         isShow.changed()
-        // this.bindings.testData.data.push({
-        //     id: new Date().getTime(),
-        //     class: "语文",
-        //     name: "李华华",
-        //     age: 18
-        // })
     },
     editSelect: function(id, e) {
         var data = this.bindings.testData
         var chooseSelect = this.bindings.chooseSelect
         var isShow = this.bindings.isShow
-    
         var info = data.data.find((item) => {
             if (item.id == id) return item
         })
         chooseSelect.data = info
         isShow.data.isShowAdd = 1
         isShow.changed()
-        // chooseSelect.changed()
     },
     deleteSelect: function(id, e) {
         var data = this.bindings.testData.data
-        console.log(data)
         data.splice(data.find(function(item) {item.id = id}), 1)
         e.target.parentNode.parentNode.remove()
     },
@@ -67,7 +54,6 @@ exports.handlers = {
                 element.parentNode.parentNode.remove()
             }
         });
-        console.log(list)
     }
 
 }

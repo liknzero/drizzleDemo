@@ -15,6 +15,18 @@ exports.store = {
     }
 }
 exports.beforeRender = function() {
-    console.log(this.renderOptions,'000')
     return this.dispatch('init', this.renderOptions)
+}
+exports.mixin = {
+    closeModel: function() {
+        var chooseInfo = this.store.models.chooseInfo
+        var isShow = this.store.models.isShow
+        var renderOptions = this.renderOptions
+        renderOptions.callbackClear()
+        isShow.clear()
+        chooseInfo.clear()
+        isShow.changed()
+        chooseInfo.changed()
+        isShow.data.isShowModel = 0
+    },
 }

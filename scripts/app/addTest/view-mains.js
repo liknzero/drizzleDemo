@@ -46,15 +46,7 @@ exports.events = {
 }
 exports.handlers = {
     backBtn: function() {
-        var chooseInfo = this.bindings.chooseInfo
-        var isShow = this.bindings.isShow
-        var renderOptions = this.module.renderOptions
-        renderOptions.callbackClear()
-        isShow.clear()
-        chooseInfo.clear()
-        isShow.changed()
-        chooseInfo.changed()
-        isShow.data.isShowModel = 0
+        this.module.closeModel()
     },
     onSubmit: function() {
         var tagElements = this.$$('form')[0].getElementsByTagName('input');   
@@ -77,13 +69,11 @@ exports.handlers = {
         }
         elements = { ...renderOptions.formInfo, ...elements } 
         renderOptions.callbacks(elements)
+        this.module.closeModel()
+
     }
 }
 exports.actions = {
-    // 'click submit-button': 'onSubmit'
 }
 exports.dataForActions = {
-    // submitBtn() {
-    //     console.log(this.$$('input[name="formClass"]'))
-    // }
 }

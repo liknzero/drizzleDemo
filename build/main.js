@@ -16,10 +16,21 @@ exports.store = {
     }
 }
 exports.beforeRender = function() {
-    console.log(this.renderOptions,'000')
     return this.dispatch('init', this.renderOptions)
 }
-
+exports.mixin = {
+    closeModel: function() {
+        var chooseInfo = this.store.models.chooseInfo
+        var isShow = this.store.models.isShow
+        var renderOptions = this.renderOptions
+        renderOptions.callbackClear()
+        isShow.clear()
+        chooseInfo.clear()
+        isShow.changed()
+        chooseInfo.changed()
+        isShow.data.isShowModel = 0
+    },
+}
 },{}],"./app/addTest/templates":[function(require,module,exports){
 var templater = require("handlebars/runtime")["default"].template;module.exports = templater({"1":function(container,depth0,helpers,partials,data) {
     return "    <div class=\"module-box\">\n        <div data-region=\"mains\"></div>\n    </div>\n";
@@ -120,15 +131,7 @@ exports.events = {
 }
 exports.handlers = {
     backBtn: function() {
-        var chooseInfo = this.bindings.chooseInfo
-        var isShow = this.bindings.isShow
-        var renderOptions = this.module.renderOptions
-        renderOptions.callbackClear()
-        isShow.clear()
-        chooseInfo.clear()
-        isShow.changed()
-        chooseInfo.changed()
-        isShow.data.isShowModel = 0
+        this.module.closeModel()
     },
     onSubmit: function() {
         var tagElements = this.$$('form')[0].getElementsByTagName('input');   
@@ -151,16 +154,15 @@ exports.handlers = {
         }
         elements = { ...renderOptions.formInfo, ...elements } 
         renderOptions.callbacks(elements)
+        this.module.closeModel()
+
     }
 }
 exports.actions = {
-    // 'click submit-button': 'onSubmit'
 }
 exports.dataForActions = {
-    // submitBtn() {
-    //     console.log(this.$$('input[name="formClass"]'))
-    // }
 }
+
 },{"lodash/collection":"lodash/collection"}],"./app/checkCom/index":[function(require,module,exports){
 exports.items = {
 	main: 'main'
@@ -834,13 +836,12 @@ module.exports = {
 };
 
 },{}],"./app/test/index":[function(require,module,exports){
-const { after } = require('lodash')
+// const { after } = require('lodash')
 var _ = require('lodash/collection');
 
 exports.store = {
 	models: {
 		testData: { autoLoad: 'after', url: '../testList'},
-		// testData: {data:testJson},
 		chooseSelect: {
 			data: {}
 		},
@@ -852,7 +853,6 @@ exports.store = {
 			this.get(testData)
 		},
 		selectOnesInput: function(payload) {
-			console.log(payload)
 			var chooseSelect = this.models.chooseSelect
 			chooseSelect = payload
 		},
@@ -866,10 +866,8 @@ exports.store = {
 				testData.data.push(payload)
 			}
 			testData.changed()
-			console.log(payload,11111)
 		},
 		clearChoose: function() {
-			console.log(333333333333)
 			var chooseSelect = this.models.chooseSelect
 			chooseSelect.data = {}
 			// chooseSelect.changed()
@@ -880,7 +878,6 @@ exports.store = {
 exports.beforeRender = function() {
 	// 这里已经可以拿到此module的所有实例化属性
 	// 此方法走完以后，就开始渲染viewdom和执行相关组件实例
-	console.log(this.store)
 	console.log('beforeRender')
 	// this.dispatch('init')
 }
@@ -888,12 +885,20 @@ exports.afterRender = function() {
 	// 在所有请求和子组件渲染完毕以后执行此生命周期
 	console.log('afterRender')
 }
+exports.beforeClose = function() {
+	// 在销毁module之前执行此方法， 会销毁相关子组件，region，和组件module实例
+	console.log('beforeClose')
+}
+exports.afterClose = function() {
+	// 在销毁组件module之后执行此方法
+	console.log('afterClose')
+}
 
 exports.items = {
 	main: 'main',
 	footer: 'footer'
 }
-},{"lodash":7,"lodash/collection":"lodash/collection"}],"./app/test/router":[function(require,module,exports){
+},{"lodash/collection":"lodash/collection"}],"./app/test/router":[function(require,module,exports){
 module.exports = {
     routes: {
         testData: 'showTestData'
@@ -1031,36 +1036,23 @@ exports.events = {
 }
 exports.handlers = {
     addSecectInfo: function (e, obj) {
-        console.log(e)
-        console.log(obj)
-        // this.app.navigate('addTest', true)
-        console.log(this.bindings.testData.data)
         var isShow = this.bindings.isShow
         isShow.data.isShowAdd = 1
         isShow.changed()
-        // this.bindings.testData.data.push({
-        //     id: new Date().getTime(),
-        //     class: "语文",
-        //     name: "李华华",
-        //     age: 18
-        // })
     },
     editSelect: function(id, e) {
         var data = this.bindings.testData
         var chooseSelect = this.bindings.chooseSelect
         var isShow = this.bindings.isShow
-    
         var info = data.data.find((item) => {
             if (item.id == id) return item
         })
         chooseSelect.data = info
         isShow.data.isShowAdd = 1
         isShow.changed()
-        // chooseSelect.changed()
     },
     deleteSelect: function(id, e) {
         var data = this.bindings.testData.data
-        console.log(data)
         data.splice(data.find(function(item) {item.id = id}), 1)
         e.target.parentNode.parentNode.remove()
     },
@@ -1079,7 +1071,6 @@ exports.handlers = {
                 element.parentNode.parentNode.remove()
             }
         });
-        console.log(list)
     }
 
 }
