@@ -30,9 +30,9 @@ exports.handlers = {
         var info = data.data.find((item) => {
             if (item.id == id) return item
         })
-        chooseSelect.data = info
         isShow.data.isShowAdd = 1
         isShow.changed()
+        chooseSelect.data = info
     },
     deleteSelect: function(id, e) {
         var data = this.bindings.testData.data
@@ -47,10 +47,9 @@ exports.handlers = {
         });
     },
     deleteMore: function(e, obj) {
-        var list = _.map(this.$$('input[name="selectOne"]'), function(x) {
+        _.map(this.$$('input[name="selectOne"]'), function(x) {
             var element = x || {};
             if (element.checked) {
-                console.log(element)
                 element.parentNode.parentNode.remove()
             }
         });

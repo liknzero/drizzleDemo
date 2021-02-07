@@ -36,7 +36,6 @@ exports.getEntity = function() {
             _this.module.dispatch('changeList',data)
         },
         callbackClear: function(data) {
-            console.log(22222222222)
             _this.module.dispatch('clearChoose', data)
         }
     };

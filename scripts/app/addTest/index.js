@@ -26,7 +26,6 @@ exports.mixin = {
         isShow.clear()
         chooseInfo.clear()
         isShow.changed()
-        chooseInfo.changed()
         isShow.data.isShowModel = 0
     },
 }
